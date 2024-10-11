@@ -30,6 +30,7 @@ class WorkoutApp extends StatefulWidget {
   State<WorkoutApp> createState() => _WorkoutAppState();
 }
 
+//First class displayed on starter page
 class _WorkoutAppState extends State<WorkoutApp> {
   final _formKey = GlobalKey<FormState>();
   String workoutType = '';
@@ -38,7 +39,9 @@ class _WorkoutAppState extends State<WorkoutApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Working Out')),
+      appBar: AppBar(title: const Text('Working Out'), 
+      centerTitle: true,
+      titleTextStyle: const TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: Colors.red,) ),
       body: Form(
         key: _formKey,
         child: Column(
