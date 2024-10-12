@@ -35,6 +35,13 @@ class _WorkoutAppState extends State<WorkoutApp> {
   final _formKey = GlobalKey<FormState>();
   String workoutType = '';
   int duration = 0;
+  bool healthMenu = false;
+
+  void _heatlhMenu() {
+    setState(() {
+      healthMenu = !healthMenu;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,46 +54,118 @@ class _WorkoutAppState extends State<WorkoutApp> {
       body: Form(
         key: _formKey,
 
-        //Main page column
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+        //Main page is the navagation row stacked on the main column
+        child: Stack(
           children: [
-            
-            //The page options at the top of the main page
-            Row (
-              mainAxisSize: MainAxisSize.max,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
-                  width: screenWidth * .25,
-                  height: 50,
-                  decoration: const BoxDecoration(color: Colors.white),
-                  child: const Center(
-                    child: Text('Heath'),
-                  ),
-                ),
-                Container(
-                  width: screenWidth * .25,
-                  height: 50,
-                  decoration: const BoxDecoration(color: Colors.white),
-                  child: const Center(
-                    child: Text('Workout'),
-                  ),
-                ),
-                Container(
-                  width: screenWidth * .25,
-                  height: 50,
-                  decoration: const BoxDecoration(color: Colors.white),
-                  child: const Center(
-                    child: Text('Organization'),
-                  ),
-                ),
-                Container(
-                  width: screenWidth * .25,
-                  height: 50,
-                  decoration: const BoxDecoration(color: Colors.white),
-                  child: const Center(
-                    child: Text('Fun'),
-                  ),
+                
+                //The page options at the top of the main page
+                Row (
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    MouseRegion (
+                      onEnter: (_) {
+                        _heatlhMenu();
+                      },
+                      onExit: (_) {
+                        _heatlhMenu();
+                      },
+                      child: Column(
+                          children: [
+                            Container(
+                                width: screenWidth * .25,
+                                height: 50,
+                                decoration: const BoxDecoration(color: Colors.white),
+                                child: const Center(
+                                  child: Text('Heath'),
+                                ),
+                              ),
+                              if (healthMenu)
+                                Container(
+                                  width: screenWidth * .25,
+                                  decoration: const BoxDecoration(color: Colors.green),
+                                  child: const Column (
+                                    children: [
+                                      Text("Update Calories"),
+                                      Text('View History'),
+                                    ],
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ),
+                    Column(
+                      children: [
+                        Container(
+                          width: screenWidth * .25,
+                          height: 50,
+                          decoration: const BoxDecoration(color: Colors.white),
+                          child: const Center(
+                            child: Text('Workout'),
+                          ),
+                        ),
+                        Container(
+                          width: screenWidth * .25,
+                          decoration: const BoxDecoration(color: Colors.green),
+                          child: const Column (
+                            children: [
+                              Text("Update Workout Info"),
+                              Text('View History'),
+                              Text('Routine Planner'),
+                            ],
+                          )
+                        ),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        Container(
+                          width: screenWidth * .25,
+                          height: 50,
+                          decoration: const BoxDecoration(color: Colors.white),
+                          child: const Center(
+                            child: Text('Organization'),
+                          ),
+                        ),
+                        Container(
+                          width: screenWidth * .25,
+                          decoration: const BoxDecoration(color: Colors.green),
+                          child: const Column (
+                            children: [
+                              Text("Edit/Add Events"),
+                              Text('Calendar'),
+                            ],
+                          )
+                        ),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        Container(
+                          width: screenWidth * .25,
+                          height: 50,
+                          decoration: const BoxDecoration(color: Colors.white),
+                          child: const Center(
+                            child: Text('Fun'),
+                          ),
+                        ),
+                        Container(
+                          width: screenWidth * .25,
+                          decoration: const BoxDecoration(color: Colors.green),
+                          child: const Column (
+                            children: [
+                              Text("Solitare"),
+                              Text('Poker'),
+                              Text('Random Wheel'),
+                            ],
+                          )
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ],
             ),
