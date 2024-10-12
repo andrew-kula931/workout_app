@@ -38,20 +38,57 @@ class _WorkoutAppState extends State<WorkoutApp> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(title: const Text('Working Out'), 
       centerTitle: true,
       titleTextStyle: const TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: Colors.red,) ),
       body: Form(
         key: _formKey,
+
+        //Main page column
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            TextFormField(
-              decoration: const InputDecoration(labelText: 'Workout Type'),
-              onSaved: (value) {
-                workoutType = value!;
-              },
+            
+            //The page options at the top of the main page
+            Row (
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Container(
+                  width: screenWidth * .25,
+                  height: 50,
+                  decoration: const BoxDecoration(color: Colors.white),
+                  child: const Center(
+                    child: Text('Heath'),
+                  ),
+                ),
+                Container(
+                  width: screenWidth * .25,
+                  height: 50,
+                  decoration: const BoxDecoration(color: Colors.white),
+                  child: const Center(
+                    child: Text('Workout'),
+                  ),
+                ),
+                Container(
+                  width: screenWidth * .25,
+                  height: 50,
+                  decoration: const BoxDecoration(color: Colors.white),
+                  child: const Center(
+                    child: Text('Organization'),
+                  ),
+                ),
+                Container(
+                  width: screenWidth * .25,
+                  height: 50,
+                  decoration: const BoxDecoration(color: Colors.white),
+                  child: const Center(
+                    child: Text('Fun'),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
