@@ -78,6 +78,112 @@ class _WorkoutAppState extends State<WorkoutApp> {
         //Main page is the navagation row stacked on the main column
         child: Stack(
           children: [
+
+            //Main page
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+
+                //Top Info
+                Container(
+                  margin: const EdgeInsets.only(left: 40, top: 60),
+                  child: const Text('This Week:', style: TextStyle(fontSize: 30)),
+                ),
+
+                //The Event bar
+                Container(
+                  margin: const EdgeInsets.only(top: 10, left: 20, right: 20),
+                  decoration: const BoxDecoration(color: Colors.teal),
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Text('Events', style: TextStyle(fontSize: 20)),
+                    ],
+                  ),
+                ),
+
+                //The goals bar
+                Container(
+                  margin: const EdgeInsets.only(left: 20, right: 20),
+                  decoration: const BoxDecoration(color: Colors.green),
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Text('Goals', style: TextStyle(fontSize: 20)),
+                    ],
+                  ),
+                ),
+
+                //The workout bar
+                Container(
+                  margin: const EdgeInsets.only(left: 20, right: 20),
+                  decoration: const BoxDecoration(color: Colors.teal),
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Text('Workouts', style: TextStyle(fontSize: 20)),
+                    ],
+                  ),
+                ),
+
+                //Health Summary
+                const Column(
+                  children: [
+                    Text('Health Summary', style: TextStyle(fontSize: 30)),
+
+                    //Calories burned
+                    Padding(
+                      padding: EdgeInsets.only(left: 40, right: 40),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Calories burned this week: '),
+                          Text('Fill in some value.'),
+                        ],
+                      ),
+                    ),
+
+                    //Calories consumed
+                    Padding(
+                      padding: EdgeInsets.only(left: 40, right: 40),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Calories consumed:  '),
+                          Text('Fill in some value.'),
+                        ],
+                      ),
+                    ),
+
+                    //Next workout to do
+                    Padding(
+                      padding: EdgeInsets.only(left: 40, right: 40),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Next Workout: '),
+                          Text('Fill in some value.'),
+                        ],
+                      ),
+                    ),
+
+                    //Underworked areas
+                    Padding(
+                      padding: EdgeInsets.only(left: 40, right: 40),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Underworked areas: '),
+                          Text('Fill in some value.'),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+
+            //Navigation Bar column
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
