@@ -40,7 +40,7 @@ class _WorkoutAppState extends State<WorkoutApp> {
   bool orgMenu = false;
   bool funMenu = false;
 
-  void _heatlhMenu() {
+  void _healthMenu() {
     setState(() {
       healthMenu = !healthMenu;
     });
@@ -87,47 +87,37 @@ class _WorkoutAppState extends State<WorkoutApp> {
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    MouseRegion (
-                      onEnter: (_) {
-                        _heatlhMenu();
-                      },
-                      onExit: (_) {
-                        _heatlhMenu();
-                      },
-                      child: Column(
-                          children: [
-                            Container(
-                                width: screenWidth * .25,
-                                height: 50,
-                                decoration: const BoxDecoration(color: Colors.white),
-                                child: const Center(
-                                  child: Text('Heath'),
-                                ),
-                              ),
-                              if (healthMenu)
-                                Container(
-                                  width: screenWidth * .25,
-                                  decoration: const BoxDecoration(color: Colors.green),
-                                  child: const Column (
-                                    children: [
-                                      Text("Update Calories"),
-                                      Text('View History'),
-                                    ],
-                                  ),
-                                ),
+                  Column(
+                    children: [
+                      GestureDetector(
+                        onTap: _healthMenu,
+                        child:Container(
+                          width: screenWidth * .25,
+                          height: 50,
+                          decoration: const BoxDecoration(color: Colors.white),
+                          child: const Center(
+                            child: Text('Heath'),
+                          ),
+                        ),
+                      ),
+                      if (healthMenu)
+                        Container(
+                          width: screenWidth * .25,
+                          decoration: const BoxDecoration(color: Colors.green),
+                          child: const Column (
+                            children: [
+                              Text("Update Calories"),
+                              Text('View History'),
                             ],
                           ),
                         ),
-                    MouseRegion (
-                      onEnter: (_) {
-                        _workoutMenu();
-                      },
-                      onExit: (_) { 
-                        _workoutMenu();
-                      },
-                      child: Column(
-                        children: [
-                          Container(
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        GestureDetector(
+                          onTap: _workoutMenu,
+                          child: Container(
                             width: screenWidth * .25,
                             height: 50,
                             decoration: const BoxDecoration(color: Colors.white),
@@ -135,31 +125,26 @@ class _WorkoutAppState extends State<WorkoutApp> {
                               child: Text('Workout'),
                             ),
                           ),
-                          if (workoutMenu)
-                            Container(
-                              width: screenWidth * .25,
-                              decoration: const BoxDecoration(color: Colors.green),
-                              child: const Column (
-                                children: [
-                                  Text("Update Workout Info"),
-                                  Text('View History'),
-                                  Text('Routine Planner'),
-                                ],
-                              )
-                            ),
-                        ],
-                      ),
-                    ),
-                    MouseRegion(
-                      onEnter: (_) {
-                        _orgMenu();
-                      },
-                      onExit: (_) {
-                        _orgMenu();
-                      },
-                      child: Column(
-                        children: [
+                        ),
+                        if (workoutMenu)
                           Container(
+                            width: screenWidth * .25,
+                            decoration: const BoxDecoration(color: Colors.green),
+                            child: const Column (
+                              children: [
+                                Text("Update Workout Info"),
+                                Text('View History'),
+                                Text('Routine Planner'),
+                              ],
+                            )
+                          ),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        GestureDetector(
+                          onTap: _orgMenu,
+                          child: Container(
                             width: screenWidth * .25,
                             height: 50,
                             decoration: const BoxDecoration(color: Colors.white),
@@ -167,30 +152,25 @@ class _WorkoutAppState extends State<WorkoutApp> {
                               child: Text('Organization'),
                             ),
                           ),
-                          if (orgMenu)
-                            Container(
-                              width: screenWidth * .25,
-                              decoration: const BoxDecoration(color: Colors.green),
-                              child: const Column (
-                                children: [
-                                  Text("Edit/Add Events"),
-                                  Text('Calendar'),
-                                ],
-                              )
-                            ),
-                        ],
-                      ),
-                    ),
-                    MouseRegion(
-                      onEnter: (_) {
-                        _funMenu();
-                      },
-                      onExit: (_) {
-                        _funMenu();
-                      },
-                      child: Column(
-                        children: [
+                        ),
+                        if (orgMenu)
                           Container(
+                            width: screenWidth * .25,
+                            decoration: const BoxDecoration(color: Colors.green),
+                            child: const Column (
+                              children: [
+                                Text("Edit/Add Events"),
+                                Text('Calendar'),
+                              ],
+                            )
+                          ),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        GestureDetector(
+                          onTap: _funMenu,
+                          child: Container(
                             width: screenWidth * .25,
                             height: 50,
                             decoration: const BoxDecoration(color: Colors.white),
@@ -198,20 +178,20 @@ class _WorkoutAppState extends State<WorkoutApp> {
                               child: Text('Fun'),
                             ),
                           ),
-                          if (funMenu)
-                            Container(
-                              width: screenWidth * .25,
-                              decoration: const BoxDecoration(color: Colors.green),
-                              child: const Column (
-                                children: [
-                                  Text("Solitare"),
-                                  Text('Poker'),
-                                  Text('Random Wheel'),
-                                ],
-                              )
-                            ),
-                        ],
-                      ),
+                        ),
+                        if (funMenu)
+                          Container(
+                            width: screenWidth * .25,
+                            decoration: const BoxDecoration(color: Colors.green),
+                            child: const Column (
+                              children: [
+                                Text("Solitare"),
+                                Text('Poker'),
+                                Text('Random Wheel'),
+                              ],
+                            )
+                          ),
+                      ],
                     ),
                   ],
                 ),
