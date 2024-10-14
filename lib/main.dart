@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'workout_page.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -69,7 +71,7 @@ class _WorkoutAppState extends State<WorkoutApp> {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      appBar: AppBar(title: const Text('Working Out'), 
+      appBar: AppBar(title: const Text('Working It Out'), 
       centerTitle: true,
       titleTextStyle: const TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: Colors.red,) ),
       body: Form(
@@ -223,6 +225,9 @@ class _WorkoutAppState extends State<WorkoutApp> {
                       children: [
                         GestureDetector(
                           onTap: _workoutMenu,
+                          onLongPress: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const WorkoutPage()));
+                          },
                           child: Container(
                             width: screenWidth * .25,
                             height: 50,
