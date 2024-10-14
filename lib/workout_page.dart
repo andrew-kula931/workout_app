@@ -1,7 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-class WorkoutPage extends StatelessWidget {
+void init() async {
+  await Hive.initFlutter();
+}
+
+class WorkoutPage extends StatefulWidget {
   const WorkoutPage({super.key});
+
+  @override
+  State<WorkoutPage> createState() => _WorkoutPage();
+}
+
+class _WorkoutPage extends State<WorkoutPage> {
+  late Box box;
+
+  //Testing String
+  String testString = 'Test Hive';
+
+  @override
+  void initState() {
+    super.initState();
+    openBox();
+  }
+
+  void openBox() async {
+    box = await Hive.openBox('testBox'); //This is a test using Hive
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold (
@@ -11,6 +37,17 @@ class WorkoutPage extends StatelessWidget {
       body: Column (
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          //Just for testing
+          ElevatedButton(
+            onPressed: () {
+              box.put('Workout', 'Upper Body');
+              setState(() {
+                testString = box.get('Workout');
+              });
+            },
+            child: Text(testString),
+          ),
+
 
           //Summary Section
           Container(
