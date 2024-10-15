@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'add_workout.dart';
 
 void init() async {
   await Hive.initFlutter();
@@ -102,7 +103,12 @@ class _WorkoutPage extends State<WorkoutPage> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  //Fill in action here <========
+                  showBottomSheet(
+                    context: context,
+                    builder: (context) {
+                      return const AddWorkout();
+                    },
+                  );
                 },
                 child: const Text('Add Workout'),
               ),

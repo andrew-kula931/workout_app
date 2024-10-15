@@ -226,7 +226,7 @@ class _WorkoutAppState extends State<WorkoutApp> {
                         GestureDetector(
                           onTap: _workoutMenu,
                           onLongPress: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => WorkoutPage()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const WorkoutPage()));
                           },
                           child: Container(
                             width: screenWidth * .25,
