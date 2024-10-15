@@ -103,10 +103,15 @@ class _WorkoutPage extends State<WorkoutPage> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  showBottomSheet(
+                  showModalBottomSheet(
                     context: context,
                     builder: (context) {
-                      return const AddWorkout();
+                      return Container (
+                        height: 200,
+                        child: const Center (
+                          child: Text('Hello World'),
+                        ),
+                      );
                     },
                   );
                 },
