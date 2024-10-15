@@ -106,12 +106,7 @@ class _WorkoutPage extends State<WorkoutPage> {
                   showModalBottomSheet(
                     context: context,
                     builder: (context) {
-                      return Container (
-                        height: 200,
-                        child: const Center (
-                          child: Text('Hello World'),
-                        ),
-                      );
+                      return const AddWorkout();
                     },
                   );
                 },

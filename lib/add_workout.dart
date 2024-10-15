@@ -25,7 +25,6 @@ class _AddWorkoutState extends State<AddWorkout> {
           Row(
             children: [
               Text('Name: '),
-              TextField(decoration: InputDecoration(labelText: 'Name')),
             ],
           ),
         ],
