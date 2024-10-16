@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'data/workout_db.dart';
 
 class AddWorkout extends StatefulWidget {
   const AddWorkout({super.key});
@@ -8,16 +10,20 @@ class AddWorkout extends StatefulWidget {
 }
 
 class _AddWorkoutState extends State<AddWorkout> {
-    // ignore: non_constant_identifier_names
-    final List<String> MUSCLE_GROUPS = [
-      'Upper Chest', 'Lower Chest', 'Latissimus Dorsi', 'Rhomboid',
-      'Trapezius', 'Teres', 'Erector Spinae', 'Biceps', 'Triceps',
-      'Deltoids', 'Obliques', 'Abs', 'Hamstrings', 'Gluteals', 'Quadriceps',
-      'Calves'
-    ];
-    String? dropDownValue;
-    List<String> dropDownValues = [];
-    bool groupList = false;
+  // ignore: non_constant_identifier_names
+  final List<String> MUSCLE_GROUPS = [
+    'Upper Chest', 'Lower Chest', 'Latissimus Dorsi', 'Rhomboid',
+    'Trapezius', 'Teres', 'Erector Spinae', 'Biceps', 'Triceps',
+    'Deltoids', 'Obliques', 'Abs', 'Hamstrings', 'Gluteals', 'Quadriceps',
+    'Calves'
+  ];
+  String? dropDownValue;
+  bool groupList = false;
+
+  //Storing inputted values
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _workoutsController = TextEditingController();
+  List<String> dropDownValues = [];
 
   @override
   Widget build(BuildContext context) {
@@ -44,11 +50,12 @@ class _AddWorkoutState extends State<AddWorkout> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   const Text('Name: '),
-                  Container(
+                  SizedBox(
                     width: 350,
                     height: 50,
-                    child: const TextField(
-                      decoration: InputDecoration(labelText: 'Name', border: OutlineInputBorder()),
+                    child: TextField(
+                      controller: _nameController,
+                      decoration: const InputDecoration(labelText: 'Name', border: OutlineInputBorder()),
                     ),
                   ),
                 ],
@@ -62,10 +69,11 @@ class _AddWorkoutState extends State<AddWorkout> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   const Text('Exercises: '),
-                  Container(
+                  SizedBox(
                     width: 350,
-                    child: const TextField(
-                      decoration: InputDecoration(labelText: 'Excercises', border: OutlineInputBorder()),
+                    child: TextField(
+                      controller: _workoutsController,
+                      decoration: const InputDecoration(labelText: 'Excercises', border: OutlineInputBorder()),
                       maxLines: 5,
                       minLines: 1,
                     ),
@@ -95,7 +103,7 @@ class _AddWorkoutState extends State<AddWorkout> {
             if(groupList)
               Padding(
                 padding: const EdgeInsets.all(4),
-                child: Container(
+                child: SizedBox(
                   width: 350,
                   height: 200,
                   child: ListView(
@@ -117,6 +125,20 @@ class _AddWorkoutState extends State<AddWorkout> {
                   ),
                 ),
               ),
+            
+            //Save button
+            ElevatedButton(
+              onPressed: () async {
+                var box = Hive.box('Workout');
+                WorkoutData data = WorkoutData(
+                  name: _nameController.text,
+                  workouts: _workoutsController.text,
+                  muscleGroups: dropDownValues,
+                );
+                await box.put('savedWorkout', data);
+              },
+              child: const Text("Save Workout"),
+            ),
           ],
         ),
       ),

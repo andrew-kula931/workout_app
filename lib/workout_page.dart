@@ -2,19 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'add_workout.dart';
 
-void init() async {
-  await Hive.initFlutter();
-}
-
 class WorkoutPage extends StatefulWidget {
-  const WorkoutPage({super.key});
+  final Box workoutBox;
+  const WorkoutPage({super.key, required this.workoutBox});
 
   @override
   State<WorkoutPage> createState() => _WorkoutPage();
 }
 
 class _WorkoutPage extends State<WorkoutPage> {
-  late Box box;
+  late Box testBox;
+  var workoutBox = Hive.box('Workout');
 
   //Testing String
   String testString = 'Test Hive';
@@ -22,11 +20,14 @@ class _WorkoutPage extends State<WorkoutPage> {
   @override
   void initState() {
     super.initState();
-    openBox();
   }
 
-  void openBox() async {
-    box = await Hive.openBox('testBox'); //This is a test using Hive
+  List<Widget> workoutTile (Box box) {
+    return box.values.map<Widget>((value) {
+      return ListTile(
+        title: Text(value.toString()),
+        );
+    }).toList();
   }
 
   @override
@@ -38,12 +39,13 @@ class _WorkoutPage extends State<WorkoutPage> {
       body: Column (
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+
           //Just for testing
           ElevatedButton(
             onPressed: () {
-              box.put('Workout', 'Upper Body');
+              testBox.put('Workout', 'Upper Body');
               setState(() {
-                testString = box.get('Workout');
+                testString = testBox.get('Workout');
               });
             },
             child: Text(testString),
@@ -123,6 +125,11 @@ class _WorkoutPage extends State<WorkoutPage> {
           Container(
             margin: const EdgeInsets.only(left: 20, top: 20),
             child: const Text('Workouts:', style: TextStyle(fontSize: 20))
+          ),
+          Flexible (
+            child: ListView(
+              children: workoutTile(workoutBox),
+            ),
           ),
         ],
       ),

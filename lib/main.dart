@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'workout_page.dart';
+import 'data/workout_db.dart';
 
+void main() async {
 
-void main() {
-  runApp(const MyApp());
+  await Hive.initFlutter();
+  Hive.registerAdapter(WorkoutDataAdapter());
+  var workoutBox = await Hive.openBox('Workout');
+
+  runApp(MyApp(workoutBox: workoutBox));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final Box workoutBox;
+  const MyApp({super.key, required this.workoutBox});
 
   // This widget is the root of your application.
   @override
@@ -18,13 +25,14 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
         useMaterial3: true,
       ),
-      home: const WorkoutApp(title: 'Flutter Demo Home Page'),
+      home: WorkoutApp(title: 'Flutter Demo Home Page', workoutBox: workoutBox),
     );
   }
 }
 
 class WorkoutApp extends StatefulWidget {
-  const WorkoutApp({super.key, required this.title});
+  final Box workoutBox;
+  const WorkoutApp({super.key, required this.title, required this.workoutBox});
 
   final String title;
 
@@ -41,6 +49,7 @@ class _WorkoutAppState extends State<WorkoutApp> {
   bool workoutMenu = false;
   bool orgMenu = false;
   bool funMenu = false;
+  var workoutBox = Hive.box('Workout');
 
   void _healthMenu() {
     setState(() {
@@ -226,7 +235,7 @@ class _WorkoutAppState extends State<WorkoutApp> {
                         GestureDetector(
                           onTap: _workoutMenu,
                           onLongPress: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => const WorkoutPage()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => WorkoutPage(workoutBox: workoutBox)));
                           },
                           child: Container(
                             width: screenWidth * .25,
