@@ -3,7 +3,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'data/workout_db.dart';
 
 class AddWorkout extends StatefulWidget {
-  const AddWorkout({super.key});
+  final Box workoutBox;
+  const AddWorkout({super.key, required this.workoutBox});
 
   @override
   State<AddWorkout> createState() => _AddWorkoutState();
@@ -130,12 +131,14 @@ class _AddWorkoutState extends State<AddWorkout> {
             ElevatedButton(
               onPressed: () async {
                 var box = Hive.box('Workout');
-                WorkoutData data = WorkoutData(
+                WorkoutDb data = WorkoutDb(
                   name: _nameController.text,
                   workouts: _workoutsController.text,
-                  muscleGroups: dropDownValues,
+                  workAreas: dropDownValues,
                 );
-                await box.put('savedWorkout', data);
+                await box.add(data);
+                // ignore: use_build_context_synchronously
+                Navigator.pop(context);
               },
               child: const Text("Save Workout"),
             ),

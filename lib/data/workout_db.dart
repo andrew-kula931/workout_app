@@ -1,31 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-class WorkoutData {
-  String name;
-  String workouts;
-  List<String> muscleGroups;
+part 'workout_db.g.dart';
 
-  WorkoutData({required this.name, required this.workouts, required this.muscleGroups});
-}
+@HiveType(typeId: 1)
+class WorkoutDb {
+  @HiveField(0)
+  late String name;
 
-class WorkoutDataAdapter extends TypeAdapter<WorkoutData> {
-  @override
-  final typeId = 0;
+  @HiveField(1)
+  late String workouts;
 
-  @override
-  WorkoutData read(BinaryReader reader) {
-    return WorkoutData(
-      name: reader.read(),
-      workouts: reader.read(),
-      muscleGroups: reader.read(),
-    );
-  }
+  @HiveField(2)
+  late List<String>? workAreas;
 
-  @override
-  void write(BinaryWriter writer, WorkoutData obj) {
-    writer.write(obj.name);
-    writer.write(obj.workouts);
-    writer.write(obj.muscleGroups);
-  }
+  WorkoutDb({this.name = '',
+    this.workouts = '',
+    this.workAreas,});
 }

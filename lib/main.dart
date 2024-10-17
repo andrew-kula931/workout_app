@@ -6,15 +6,21 @@ import 'data/workout_db.dart';
 void main() async {
 
   await Hive.initFlutter();
-  Hive.registerAdapter(WorkoutDataAdapter());
-  var workoutBox = await Hive.openBox('Workout');
+  Hive.registerAdapter(WorkoutDbAdapter());
+  await Hive.openBox('Workout');
 
-  runApp(MyApp(workoutBox: workoutBox));
+  runApp(const MyApp());
 }
-
+/*
+void printBoxContents(Box box) {
+  print('Box Name: ${box.name}');
+  print('Box Length: ${box.length}');
+  print('Box Keys: ${box.keys}');
+  print('Box Values: ${box.values}');
+}
+*/
 class MyApp extends StatelessWidget {
-  final Box workoutBox;
-  const MyApp({super.key, required this.workoutBox});
+  const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
@@ -25,14 +31,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
         useMaterial3: true,
       ),
-      home: WorkoutApp(title: 'Flutter Demo Home Page', workoutBox: workoutBox),
+      home: const WorkoutApp(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
 class WorkoutApp extends StatefulWidget {
-  final Box workoutBox;
-  const WorkoutApp({super.key, required this.title, required this.workoutBox});
+  const WorkoutApp({super.key, required this.title});
 
   final String title;
 
@@ -49,7 +54,6 @@ class _WorkoutAppState extends State<WorkoutApp> {
   bool workoutMenu = false;
   bool orgMenu = false;
   bool funMenu = false;
-  var workoutBox = Hive.box('Workout');
 
   void _healthMenu() {
     setState(() {
@@ -235,7 +239,7 @@ class _WorkoutAppState extends State<WorkoutApp> {
                         GestureDetector(
                           onTap: _workoutMenu,
                           onLongPress: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => WorkoutPage(workoutBox: workoutBox)));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const WorkoutPage()));
                           },
                           child: Container(
                             width: screenWidth * .25,

@@ -1,31 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'add_workout.dart';
+import 'data/workout_db.dart';
 
 class WorkoutPage extends StatefulWidget {
-  final Box workoutBox;
-  const WorkoutPage({super.key, required this.workoutBox});
+  const WorkoutPage({super.key});
 
   @override
   State<WorkoutPage> createState() => _WorkoutPage();
 }
 
 class _WorkoutPage extends State<WorkoutPage> {
-  late Box testBox;
-  var workoutBox = Hive.box('Workout');
-
-  //Testing String
-  String testString = 'Test Hive';
+  late final Box _workoutBox;
 
   @override
   void initState() {
     super.initState();
+    _workoutBox = Hive.box('Workout');
   }
 
   List<Widget> workoutTile (Box box) {
     return box.values.map<Widget>((value) {
       return ListTile(
-        title: Text(value.toString()),
+        title: Text(value.name),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Workouts: ${value.workouts}'),
+            Text('Work Areas: ${value.workAreas?.join(', ') ?? 'No Work Areas'}'),
+          ],
+        ),
         );
     }).toList();
   }
@@ -39,18 +43,6 @@ class _WorkoutPage extends State<WorkoutPage> {
       body: Column (
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
-          //Just for testing
-          ElevatedButton(
-            onPressed: () {
-              testBox.put('Workout', 'Upper Body');
-              setState(() {
-                testString = testBox.get('Workout');
-              });
-            },
-            child: Text(testString),
-          ),
-
 
           //Summary Section
           Container(
@@ -108,7 +100,7 @@ class _WorkoutPage extends State<WorkoutPage> {
                   showModalBottomSheet(
                     context: context,
                     builder: (context) {
-                      return const AddWorkout();
+                      return AddWorkout(workoutBox: _workoutBox);
                     },
                   );
                 },
@@ -126,9 +118,9 @@ class _WorkoutPage extends State<WorkoutPage> {
             margin: const EdgeInsets.only(left: 20, top: 20),
             child: const Text('Workouts:', style: TextStyle(fontSize: 20))
           ),
-          Flexible (
+          Flexible(
             child: ListView(
-              children: workoutTile(workoutBox),
+              children: workoutTile(_workoutBox),
             ),
           ),
         ],
