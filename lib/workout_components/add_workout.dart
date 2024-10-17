@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'data/workout_db.dart';
+import '../data/workout_db.dart';
 
 class AddWorkout extends StatefulWidget {
   final Box workoutBox;

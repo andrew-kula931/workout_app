@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'add_workout.dart';
-import 'data/workout_db.dart';
+import 'workout_components/add_workout.dart';
+import 'workout_components/workout_notes.dart';
 
 class WorkoutPage extends StatefulWidget {
   const WorkoutPage({super.key});
@@ -19,9 +19,13 @@ class _WorkoutPage extends State<WorkoutPage> {
     _workoutBox = Hive.box('Workout');
   }
 
+//List tile for the list of workouts created
   List<Widget> workoutTile (Box box) {
     return box.values.map<Widget>((value) {
-      return ListTile(
+      return Padding(
+        padding: const EdgeInsets.only(left:20, right:20),
+        child: ListTile(
+        tileColor: Colors.amber,
         title: Text(value.name),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -29,6 +33,7 @@ class _WorkoutPage extends State<WorkoutPage> {
             Text('Workouts: ${value.workouts}'),
             Text('Work Areas: ${value.workAreas?.join(', ') ?? 'No Work Areas'}'),
           ],
+        ),
         ),
         );
     }).toList();
@@ -80,6 +85,8 @@ class _WorkoutPage extends State<WorkoutPage> {
           const SizedBox(
             height: 40,
           ),
+
+          //Operation buttons
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -108,12 +115,19 @@ class _WorkoutPage extends State<WorkoutPage> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  //Fill in action here <========
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) {
+                      return const WorkoutNotes();
+                    }
+                  );
                 },
                 child: const Text('Workout Notes'),
               ),
             ],
           ),
+
+          //List of workouts created
           Container(
             margin: const EdgeInsets.only(left: 20, top: 20),
             child: const Text('Workouts:', style: TextStyle(fontSize: 20))
