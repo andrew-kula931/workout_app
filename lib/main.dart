@@ -9,6 +9,8 @@ void main() async {
   Hive.registerAdapter(WorkoutDbAdapter());
   await Hive.openBox('Workout');
 
+  await Hive.openBox('WorkoutNotes');
+
   runApp(const MyApp());
 }
 /*

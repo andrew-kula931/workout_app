@@ -12,11 +12,13 @@ class WorkoutPage extends StatefulWidget {
 
 class _WorkoutPage extends State<WorkoutPage> {
   late final Box _workoutBox;
+  late final Box _workoutNotes;
 
   @override
   void initState() {
     super.initState();
     _workoutBox = Hive.box('Workout');
+    _workoutNotes = Hive.box('WorkoutNotes');
   }
 
 //List tile for the list of workouts created
@@ -118,7 +120,7 @@ class _WorkoutPage extends State<WorkoutPage> {
                   showModalBottomSheet(
                     context: context,
                     builder: (context) {
-                      return const WorkoutNotes();
+                      return WorkoutNotes(workoutNotes: _workoutNotes);
                     }
                   );
                 },
