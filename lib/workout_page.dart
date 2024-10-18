@@ -122,7 +122,11 @@ class _WorkoutPage extends State<WorkoutPage> {
                     builder: (context) {
                       return WorkoutNotes(workoutNotes: _workoutNotes);
                     }
-                  );
+                  ).then((value) {
+                    setState(() {
+
+                    });
+                  });
                 },
                 child: const Text('Workout Notes'),
               ),
