@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'workout_page.dart';
+import 'pages/workout_page.dart';
 import 'data/workout_db.dart';
 
 void main() async {
