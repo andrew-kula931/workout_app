@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'workout_components/add_workout.dart';
-import 'workout_components/workout_notes.dart';
+import '../workout_components/add_workout.dart';
+import '../workout_components/workout_notes.dart';
+import '../workout_components/document_workout.dart';
 
 class WorkoutPage extends StatefulWidget {
   const WorkoutPage({super.key});
@@ -19,26 +20,6 @@ class _WorkoutPage extends State<WorkoutPage> {
     super.initState();
     _workoutBox = Hive.box('Workout');
     _workoutNotes = Hive.box('WorkoutNotes');
-  }
-
-//List tile for the list of workouts created
-  List<Widget> workoutTile (Box box) {
-    return box.values.map<Widget>((value) {
-      return Padding(
-        padding: const EdgeInsets.only(left:20, right:20),
-        child: ListTile(
-        tileColor: Colors.amber,
-        title: Text(value.name),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Workouts: ${value.workouts}'),
-            Text('Work Areas: ${value.workAreas?.join(', ') ?? 'No Work Areas'}'),
-          ],
-        ),
-        ),
-        );
-    }).toList();
   }
 
   @override
@@ -135,8 +116,35 @@ class _WorkoutPage extends State<WorkoutPage> {
             child: const Text('Workouts:', style: TextStyle(fontSize: 20))
           ),
           Flexible(
-            child: ListView(
-              children: workoutTile(_workoutBox),
+            child: ListView.builder(
+              itemCount: _workoutBox.length,
+              itemBuilder: (context, index) {
+                var value = _workoutBox.getAt(index);
+                return Padding(
+                  padding: const EdgeInsets.only(left:20, right:20),
+                  child: GestureDetector(
+                    onTap: () {
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return DocumentWorkout(workoutDb: _workoutBox, index: index);
+                        },
+                      );
+                    },
+                    child: ListTile(
+                      tileColor: Colors.amber,
+                      title: Text(value.name),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Workouts: ${value.workouts}'),
+                          Text('Work Areas: ${value.workAreas?.join(', ') ?? 'No Work Areas'}'),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              }
             ),
           ),
         ],
