@@ -3,7 +3,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 part 'workout_db.g.dart';
 
 @HiveType(typeId: 1)
-class WorkoutDb {
+class WorkoutDb extends HiveObject {
   @HiveField(0)
   late String name;
 

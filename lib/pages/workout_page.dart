@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import '../workout_components/add_workout.dart';
 import '../workout_components/workout_notes.dart';
-import '../workout_components/document_workout.dart';
+import '../workout_components/edit_workout.dart';
 
 class WorkoutPage extends StatefulWidget {
   const WorkoutPage({super.key});
@@ -127,9 +127,11 @@ class _WorkoutPage extends State<WorkoutPage> {
                       showModalBottomSheet(
                         context: context,
                         builder: (context) {
-                          return DocumentWorkout(workoutDb: _workoutBox, index: index);
+                          return EditWorkout(workoutDb: _workoutBox, index: index);
                         },
-                      );
+                      ).then((value) { //This is how I dynamically update the tile
+                        setState(() {});
+                      });
                     },
                     child: ListTile(
                       tileColor: Colors.amber,

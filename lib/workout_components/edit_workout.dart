@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import '../data/workout_db.dart';
 
-class DocumentWorkout extends StatefulWidget {
+class EditWorkout extends StatefulWidget {
   final Box workoutDb;
   final int index;
-  const DocumentWorkout({super.key, required this.workoutDb, required this.index});
+  const EditWorkout({super.key, required this.workoutDb, required this.index});
 
   @override
-  State<DocumentWorkout> createState() => _DocumentWorkoutState();
+  State<EditWorkout> createState() => _EditWorkoutState();
 }
 
-class _DocumentWorkoutState extends State<DocumentWorkout> {
+class _EditWorkoutState extends State<EditWorkout> {
 
   @override
   void initState() {
@@ -148,20 +148,34 @@ final List<String> MUSCLE_GROUPS = [
                 ),
               ),
             
-            //Update button
-            ElevatedButton(
-              onPressed: () async {
-                var box = Hive.box('Workout');
-                WorkoutDb data = WorkoutDb(
-                  name: _nameController.text,
-                  workouts: _workoutsController.text,
-                  workAreas: dropDownValues,
-                );
-                await box.add(data);
-                // ignore: use_build_context_synchronously
-                Navigator.pop(context);
-              },
-              child: const Text("Update"),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                //Update button
+                ElevatedButton(
+                  onPressed: () async {
+                    var box = Hive.box('Workout');
+                    var boxToChange = box.getAt(widget.index);
+                    boxToChange.name = _nameController.text;
+                    boxToChange.workouts = _workoutsController.text;
+                    boxToChange.workAreas = dropDownValues;
+                    boxToChange.save();
+                    // ignore: use_build_context_synchronously
+                    Navigator.pop(context);
+                  },
+                  child: const Text("Update"),
+                ),
+                //Delete Button
+                ElevatedButton(
+                  onPressed: () async {
+                    var badBox = Hive.box('Workout');
+                    badBox.deleteAt(widget.index);
+                    // ignore: use_build_context_synchronously
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Delete'),
+                ),
+              ],
             ),
           ],
         ),
