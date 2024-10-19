@@ -13,14 +13,7 @@ void main() async {
 
   runApp(const MyApp());
 }
-/*
-void printBoxContents(Box box) {
-  print('Box Name: ${box.name}');
-  print('Box Length: ${box.length}');
-  print('Box Keys: ${box.keys}');
-  print('Box Values: ${box.values}');
-}
-*/
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -28,12 +21,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Working It Out',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
         useMaterial3: true,
       ),
-      home: const WorkoutApp(title: 'Flutter Demo Home Page'),
+      home: const WorkoutApp(title: 'Working It Out Home Page'),
     );
   }
 }

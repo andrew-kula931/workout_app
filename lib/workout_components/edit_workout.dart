@@ -4,7 +4,11 @@ import 'package:hive_flutter/hive_flutter.dart';
 class EditWorkout extends StatefulWidget {
   final Box workoutDb;
   final int index;
-  const EditWorkout({super.key, required this.workoutDb, required this.index});
+  final bool time;
+  const EditWorkout({super.key,
+  required this.workoutDb, 
+  required this.index, 
+  required this.time});
 
   @override
   State<EditWorkout> createState() => _EditWorkoutState();
@@ -32,7 +36,9 @@ final List<String> MUSCLE_GROUPS = [
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _workoutsController = TextEditingController();
   List<String> dropDownValues = [];
+  final TextEditingController _dateTimeController = TextEditingController();
 
+  //Sets the inital controller values
   Future<void> _initializeControllers() async {
     var box = Hive.box('Workout');
     var workoutData = box.getAt(widget.index);
@@ -44,6 +50,28 @@ final List<String> MUSCLE_GROUPS = [
         dropDownValues = workoutData.workAreas ?? [];
       });
     }
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );
+    if (picked != null) {
+      setState(() {
+        _dateTimeController.text = picked.toString();
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _dateTimeController.dispose();
+    _nameController.dispose();
+    _workoutsController.dispose();
+    super.dispose();
   }
 
   @override
@@ -147,6 +175,15 @@ final List<String> MUSCLE_GROUPS = [
                 ),
               ),
             
+            //Date Picker
+            if(widget.time)
+              TextField(
+                controller: _dateTimeController,
+                readOnly: true,
+                onTap: () => _selectDate(context),
+                decoration: const InputDecoration(hintText: 'Select Date'),
+              ),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -158,22 +195,27 @@ final List<String> MUSCLE_GROUPS = [
                     boxToChange.name = _nameController.text;
                     boxToChange.workouts = _workoutsController.text;
                     boxToChange.workAreas = dropDownValues;
+                    if (widget.time) {
+                      boxToChange.day = _dateTimeController;
+                    }
                     boxToChange.save();
                     // ignore: use_build_context_synchronously
                     Navigator.pop(context);
                   },
-                  child: const Text("Update"),
+                  child: Text(!widget.time ? "Update" : 'Add',), //Sets text conditionally
                 ),
-                //Delete Button
-                ElevatedButton(
-                  onPressed: () async {
-                    var badBox = Hive.box('Workout');
-                    badBox.deleteAt(widget.index);
-                    // ignore: use_build_context_synchronously
-                    Navigator.pop(context);
-                  },
-                  child: const Text('Delete'),
-                ),
+
+                //Delete Button, only shows if editing
+                if(!widget.time)
+                  ElevatedButton(
+                    onPressed: () async {
+                      var badBox = Hive.box('Workout');
+                      badBox.deleteAt(widget.index);
+                      // ignore: use_build_context_synchronously
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Delete'),
+                  ),
               ],
             ),
           ],

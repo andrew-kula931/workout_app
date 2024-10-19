@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import '../data/workout_db.dart';
+import '../workout_components/edit_workout.dart';
 
 class WorkoutArchive extends StatefulWidget {
   const WorkoutArchive({super.key});
@@ -50,11 +51,14 @@ class _WorkoutArchiveState extends State<WorkoutArchive> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ElevatedButton(
-                onPressed: () {
-                  //build bottom sheet
-                },
-                child: const Text('Record Workout')
+              Padding(
+                padding: const EdgeInsets.all(6),
+                child: ElevatedButton(
+                  onPressed: () {
+                    //Show list of workouts
+                  },
+                  child: const Text('Record Workout')
+                ),
               ),
             ],
           ),

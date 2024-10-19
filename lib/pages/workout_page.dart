@@ -132,7 +132,7 @@ class _WorkoutPage extends State<WorkoutPage> {
                       showModalBottomSheet(
                         context: context,
                         builder: (context) {
-                          return EditWorkout(workoutDb: _workoutBox, index: index);
+                          return EditWorkout(workoutDb: _workoutBox, index: index, time: false);
                         },
                       ).then((value) { //This is how I dynamically update the tile
                         setState(() {});
