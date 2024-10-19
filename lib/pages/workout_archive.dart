@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import '../data/workout_db.dart';
-import '../workout_components/edit_workout.dart';
+import 'package:workout/workout_components/edit_workout.dart';
+import '../workout_components/workout_list.dart';
+
+/*
+
+Need to create new Hive Box for documented workouts
+
+
+*/
+
 
 class WorkoutArchive extends StatefulWidget {
   const WorkoutArchive({super.key});
@@ -12,11 +20,33 @@ class WorkoutArchive extends StatefulWidget {
 
 class _WorkoutArchiveState extends State<WorkoutArchive> {
   late List<dynamic> _filteredList;
+  late final Box workoutList;
 
   @override
   void initState() {
     super.initState();
+    workoutList = Hive.box('Workout');
     _filteredList = Hive.box('Workout').values.where((workout) => workout.day != null).toList();
+  }
+
+  Future<void> _getWorkout() async {
+    final result = await showModalBottomSheet<int>(
+      context: context,
+      builder: (context) {
+        return WorkoutList(workoutList: workoutList);
+      }
+    );
+    if (result != null) {
+      showModalBottomSheet(
+        // ignore: use_build_context_synchronously
+        context: context, 
+        builder: (context) {
+          return EditWorkout(workoutDb: workoutList, index: result, time: true);
+        }
+      ).then((value) {
+        setState(() {});
+      });
+    }
   }
 
   @override
@@ -55,7 +85,7 @@ class _WorkoutArchiveState extends State<WorkoutArchive> {
                 padding: const EdgeInsets.all(6),
                 child: ElevatedButton(
                   onPressed: () {
-                    //Show list of workouts
+                    _getWorkout();
                   },
                   child: const Text('Record Workout')
                 ),

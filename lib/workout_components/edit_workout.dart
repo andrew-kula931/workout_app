@@ -196,7 +196,7 @@ final List<String> MUSCLE_GROUPS = [
                     boxToChange.workouts = _workoutsController.text;
                     boxToChange.workAreas = dropDownValues;
                     if (widget.time) {
-                      boxToChange.day = _dateTimeController;
+                      boxToChange.day = DateTime.parse(_dateTimeController.text);
                     }
                     boxToChange.save();
                     // ignore: use_build_context_synchronously
