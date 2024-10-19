@@ -3,13 +3,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:workout/workout_components/edit_workout.dart';
 import '../workout_components/workout_list.dart';
 
-/*
-
-Need to create new Hive Box for documented workouts
-
-
-*/
-
 
 class WorkoutArchive extends StatefulWidget {
   const WorkoutArchive({super.key});
@@ -19,14 +12,14 @@ class WorkoutArchive extends StatefulWidget {
 }
 
 class _WorkoutArchiveState extends State<WorkoutArchive> {
-  late List<dynamic> _filteredList;
+  late final Box _filteredList;
   late final Box workoutList;
 
   @override
   void initState() {
     super.initState();
     workoutList = Hive.box('Workout');
-    _filteredList = Hive.box('Workout').values.where((workout) => workout.day != null).toList();
+    _filteredList = Hive.box('WorkoutDoc');
   }
 
   Future<void> _getWorkout() async {
@@ -61,7 +54,7 @@ class _WorkoutArchiveState extends State<WorkoutArchive> {
             child: ListView.builder(
               itemCount: _filteredList.length, //Needs to make this dynamic
               itemBuilder: (context, index) {
-                var doc = _filteredList[index];
+                var doc = _filteredList.getAt(index);
                 return ListTile(
                   title: Text(doc.name),
                   subtitle: Column(
@@ -69,7 +62,7 @@ class _WorkoutArchiveState extends State<WorkoutArchive> {
                     children: [
                       Text('Workouts: ${doc.workouts}'),
                       Text('Work Areas: ${doc.workAreas?.join(', ') ?? 'No Areas'}'),
-                      Text('Day: ${doc.day.toString()}'),
+                      Text('Day: ${doc.day.month}/${doc.day.day}/${doc.day.year}'),
                     ],
                   ),
                 );

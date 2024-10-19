@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import '../data/workout_db.dart';
 
 class EditWorkout extends StatefulWidget {
   final Box workoutDb;
@@ -15,6 +16,7 @@ class EditWorkout extends StatefulWidget {
 }
 
 class _EditWorkoutState extends State<EditWorkout> {
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -177,11 +179,21 @@ final List<String> MUSCLE_GROUPS = [
             
             //Date Picker
             if(widget.time)
-              TextField(
-                controller: _dateTimeController,
-                readOnly: true,
-                onTap: () => _selectDate(context),
-                decoration: const InputDecoration(hintText: 'Select Date'),
+              Form(
+                key: _formKey,
+                child: TextFormField(
+                  controller: _dateTimeController,
+                  readOnly: true,
+                  //Validates if it has been set
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please set date';
+                    }
+                    return null;
+                  },
+                  onTap: () => _selectDate(context),
+                  decoration: const InputDecoration(hintText: 'Select Date'),
+                ),
               ),
 
             Row(
@@ -190,17 +202,28 @@ final List<String> MUSCLE_GROUPS = [
                 //Update button
                 ElevatedButton(
                   onPressed: () async {
-                    var box = Hive.box('Workout');
-                    var boxToChange = box.getAt(widget.index);
-                    boxToChange.name = _nameController.text;
-                    boxToChange.workouts = _workoutsController.text;
-                    boxToChange.workAreas = dropDownValues;
                     if (widget.time) {
-                      boxToChange.day = DateTime.parse(_dateTimeController.text);
+                      if (_formKey.currentState!.validate()) {
+                        var box = Hive.box('WorkoutDoc');
+                        WorkoutDoc data = WorkoutDoc(
+                          name: _nameController.text,
+                          workouts: _workoutsController.text,
+                          workAreas: dropDownValues,
+                          day: DateTime.parse(_dateTimeController.text),
+                        );
+                        await box.add(data);
+                        // ignore: use_build_context_synchronously
+                        Navigator.pop(context);
+                      }
+                    } else {
+                      var box = Hive.box('Workout');
+                      var boxToChange = box.getAt(widget.index);
+                      boxToChange.name = _nameController.text;
+                      boxToChange.workouts = _workoutsController.text;
+                      boxToChange.workAreas = dropDownValues;
+                      boxToChange.save();
+                      Navigator.pop(context);
                     }
-                    boxToChange.save();
-                    // ignore: use_build_context_synchronously
-                    Navigator.pop(context);
                   },
                   child: Text(!widget.time ? "Update" : 'Add',), //Sets text conditionally
                 ),
