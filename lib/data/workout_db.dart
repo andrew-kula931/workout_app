@@ -13,7 +13,11 @@ class WorkoutDb extends HiveObject {
   @HiveField(2)
   late List<String>? workAreas;
 
+  @HiveField(3)
+  late DateTime? day;
+
   WorkoutDb({this.name = '',
     this.workouts = '',
-    this.workAreas,});
+    this.workAreas,
+    this.day});
 }

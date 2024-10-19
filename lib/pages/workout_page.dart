@@ -92,7 +92,9 @@ class _WorkoutPage extends State<WorkoutPage> {
                     builder: (context) {
                       return AddWorkout(workoutBox: _workoutBox);
                     },
-                  );
+                  ).then((value) {
+                    setState(() {});
+                  });
                 },
                 child: const Text('Add Workout'),
               ),
@@ -103,7 +105,9 @@ class _WorkoutPage extends State<WorkoutPage> {
                     builder: (context) {
                       return WorkoutNotes(workoutNotes: _workoutNotes);
                     }
-                  );
+                  ).then((value) {
+                    setState(() {});
+                  });
                 },
                 child: const Text('Workout Notes'),
               ),
@@ -121,7 +125,7 @@ class _WorkoutPage extends State<WorkoutPage> {
               itemBuilder: (context, index) {
                 var value = _workoutBox.getAt(index);
                 return Padding(
-                  padding: const EdgeInsets.only(left:20, right:20),
+                  padding: const EdgeInsets.only(left:20, right:20, bottom: 1),
                   child: GestureDetector(
                     onTap: () {
                       showModalBottomSheet(
