@@ -3,6 +3,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import '../workout_components/add_workout.dart';
 import '../workout_components/workout_notes.dart';
 import '../workout_components/edit_workout.dart';
+import 'workout_archive.dart';
 
 class WorkoutPage extends StatefulWidget {
   const WorkoutPage({super.key});
@@ -81,7 +82,7 @@ class _WorkoutPage extends State<WorkoutPage> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  //Fill in action here <========
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const WorkoutArchive()));
                 },
                 child: const Text('Document Workout'),
               ),
