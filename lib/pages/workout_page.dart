@@ -15,12 +15,106 @@ class WorkoutPage extends StatefulWidget {
 class _WorkoutPage extends State<WorkoutPage> {
   late final Box _workoutBox;
   late final Box _workoutNotes;
+  late final Box _workoutDocs;
+  late List<String> worked;
+  late List<String> notworked;
+
+  //Setup for areas worked calculations
+  Map<String, int> muscleGroups = {
+    'upperChest': 0,
+    'lowerChest': 0,
+    'latissimusDorsi': 0,
+    'rhomboid': 0,
+    'trapezius': 0,
+    'teres': 0,
+    'erectorSpinae': 0,
+    'biceps': 0,
+    'triceps': 0,
+    'deltoids': 0,
+    'obliques': 0,
+    'abs': 0,
+    'hamstrings': 0,
+    'gluteals': 0,
+    'quadriceps': 0,
+    'calves': 0,
+  };
 
   @override
   void initState() {
     super.initState();
     _workoutBox = Hive.box('Workout');
     _workoutNotes = Hive.box('WorkoutNotes');
+    _workoutDocs = Hive.box('WorkoutDoc');
+    countAreas();
+  }
+
+  //Counts the worked areas
+  void countAreas() {
+    for (var i = 0; i < _workoutDocs.length; i++) {
+      var obj = _workoutDocs.getAt(i);
+      for (var area in obj.workAreas) {
+       switch (area) {
+        case 'Upper Chest':
+          muscleGroups['upperChest'] = muscleGroups['upperChest']! + 1;
+          break;
+        case 'Lower Chest':
+          muscleGroups['lowerChest'] = muscleGroups['lowerChest']! + 1;
+          break;
+        case 'Latissimus Dorsi':
+          muscleGroups['latissimusDorsi'] = muscleGroups['latissimusDorsi']! + 1;
+          break;
+        case 'Rhomboid':
+          muscleGroups['rhomboid'] = muscleGroups['rhomboid']! + 1;
+          break;
+        case 'Trapezius':
+          muscleGroups['trapezius'] = muscleGroups['trapezius']! + 1;
+          break;
+        case 'Teres':
+          muscleGroups['teres'] = muscleGroups['teres']! + 1;
+          break;
+        case 'Erector Spinae':
+          muscleGroups['erectorSpinae'] = muscleGroups['erectorSpinae']! + 1;
+          break;
+        case 'Biceps':
+          muscleGroups['biceps'] = muscleGroups['biceps']! + 1;
+          break;
+        case 'Triceps':
+          muscleGroups['triceps'] = muscleGroups['triceps']! + 1;
+          break;
+        case 'Deltoids':
+          muscleGroups['deltoids'] = muscleGroups['deltoids']! + 1;
+          break;
+        case 'Obliques':
+          muscleGroups['obliques'] = muscleGroups['obliques']! + 1;
+          break;
+        case 'Abs':
+          muscleGroups['abs'] = muscleGroups['abs']! + 1;
+          break;
+        case 'Hamstrings':
+          muscleGroups['hamstrings'] = muscleGroups['hamstrings']! + 1;
+          break;
+        case 'Gluteals':
+          muscleGroups['gluteals'] = muscleGroups['gluteals']! + 1;
+          break;
+        case 'Quadriceps':
+          muscleGroups['quadriceps'] = muscleGroups['quadriceps']! + 1;
+          break;
+        case 'Calves':
+          muscleGroups['calves'] = muscleGroups['calves']! + 1;
+          break;
+        default:
+          break;
+        }
+      }
+    }
+    worked = muscleGroups.entries
+      .where((entry) => entry.value > 0)
+      .map((entry) => entry.key)
+      .toList();
+    notworked = muscleGroups.entries
+      .where((entry) => entry.value == 0)
+      .map((entry) => entry.key)
+      .toList();
   }
 
   @override
@@ -48,7 +142,7 @@ class _WorkoutPage extends State<WorkoutPage> {
                     height: 50,
                     width: 400,
                     decoration: const BoxDecoration(color: Colors.blue),
-                    child: const Text('To Fill In'),
+                    child: Text(worked.join(', ')),
                   ),
                 ],
               ),
@@ -60,7 +154,7 @@ class _WorkoutPage extends State<WorkoutPage> {
                     height: 50,
                     width: 400,
                     decoration: const BoxDecoration(color: Colors.blue),
-                    child: const Text('To Fill In'),
+                    child: Text(notworked.join(', ')),
                   ),
                 ],
               ),
