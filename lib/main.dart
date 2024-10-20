@@ -3,6 +3,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'pages/workout_page.dart';
 import 'data/workout_db.dart';
 import 'pages/workout_archive.dart';
+import 'pages/routine_planner.dart';
 
 void main() async {
 
@@ -290,13 +291,18 @@ class _WorkoutAppState extends State<WorkoutApp> {
                                     ),
                                   ),
                                 ),
-                                MouseRegion(
-                                  onEnter: (event) => setState(() => routinePlannerColor = Colors.green),
-                                  onExit: (event) => setState(() => routinePlannerColor = Colors.lightGreen),
-                                  child: Container(
-                                    height: 40,
-                                    decoration: BoxDecoration(color: routinePlannerColor),
-                                    child: const Center(child: Text("Routine Planner"),) 
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => const RoutinePlanner()));
+                                  },
+                                  child: MouseRegion(
+                                    onEnter: (event) => setState(() => routinePlannerColor = Colors.green),
+                                    onExit: (event) => setState(() => routinePlannerColor = Colors.lightGreen),
+                                    child: Container(
+                                      height: 40,
+                                      decoration: BoxDecoration(color: routinePlannerColor),
+                                      child: const Center(child: Text("Routine Planner"),) 
+                                    ),
                                   ),
                                 ),
                               ],
