@@ -4,6 +4,7 @@ import '../workout_components/add_workout.dart';
 import '../workout_components/workout_notes.dart';
 import '../workout_components/edit_workout.dart';
 import 'workout_archive.dart';
+import 'routine_planner.dart';
 
 class WorkoutPage extends StatefulWidget {
   const WorkoutPage({super.key});
@@ -176,9 +177,9 @@ class _WorkoutPage extends State<WorkoutPage> {
             children: [
               ElevatedButton(
                 onPressed: () {
-                  //Fill in action here <========
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const RoutinePlanner()));
                 },
-                child: const Text('Schedule Workout'),
+                child: const Text('Routine Planner'),
               ),
               ElevatedButton(
                 onPressed: () {
