@@ -21,22 +21,22 @@ class _WorkoutPage extends State<WorkoutPage> {
 
   //Setup for areas worked calculations
   Map<String, int> muscleGroups = {
-    'upperChest': 0,
-    'lowerChest': 0,
-    'latissimusDorsi': 0,
-    'rhomboid': 0,
-    'trapezius': 0,
-    'teres': 0,
-    'erectorSpinae': 0,
-    'biceps': 0,
-    'triceps': 0,
-    'deltoids': 0,
-    'obliques': 0,
-    'abs': 0,
-    'hamstrings': 0,
-    'gluteals': 0,
-    'quadriceps': 0,
-    'calves': 0,
+    'UpperChest': 0,
+    'LowerChest': 0,
+    'LatissimusDorsi': 0,
+    'Rhomboid': 0,
+    'Trapezius': 0,
+    'Teres': 0,
+    'ErectorSpinae': 0,
+    'Biceps': 0,
+    'Triceps': 0,
+    'Deltoids': 0,
+    'Obliques': 0,
+    'Abs': 0,
+    'Hamstrings': 0,
+    'Gluteals': 0,
+    'Quadriceps': 0,
+    'Calves': 0,
   };
 
   @override
@@ -55,52 +55,52 @@ class _WorkoutPage extends State<WorkoutPage> {
       for (var area in obj.workAreas) {
        switch (area) {
         case 'Upper Chest':
-          muscleGroups['upperChest'] = muscleGroups['upperChest']! + 1;
+          muscleGroups['UpperChest'] = muscleGroups['UpperChest']! + 1;
           break;
         case 'Lower Chest':
-          muscleGroups['lowerChest'] = muscleGroups['lowerChest']! + 1;
+          muscleGroups['LowerChest'] = muscleGroups['LowerChest']! + 1;
           break;
         case 'Latissimus Dorsi':
-          muscleGroups['latissimusDorsi'] = muscleGroups['latissimusDorsi']! + 1;
+          muscleGroups['LatissimusDorsi'] = muscleGroups['LatissimusDorsi']! + 1;
           break;
         case 'Rhomboid':
-          muscleGroups['rhomboid'] = muscleGroups['rhomboid']! + 1;
+          muscleGroups['Rhomboid'] = muscleGroups['Rhomboid']! + 1;
           break;
         case 'Trapezius':
-          muscleGroups['trapezius'] = muscleGroups['trapezius']! + 1;
+          muscleGroups['Trapezius'] = muscleGroups['Trapezius']! + 1;
           break;
         case 'Teres':
-          muscleGroups['teres'] = muscleGroups['teres']! + 1;
+          muscleGroups['Teres'] = muscleGroups['Teres']! + 1;
           break;
         case 'Erector Spinae':
-          muscleGroups['erectorSpinae'] = muscleGroups['erectorSpinae']! + 1;
+          muscleGroups['ErectorSpinae'] = muscleGroups['ErectorSpinae']! + 1;
           break;
         case 'Biceps':
-          muscleGroups['biceps'] = muscleGroups['biceps']! + 1;
+          muscleGroups['Biceps'] = muscleGroups['Biceps']! + 1;
           break;
         case 'Triceps':
-          muscleGroups['triceps'] = muscleGroups['triceps']! + 1;
+          muscleGroups['Triceps'] = muscleGroups['Triceps']! + 1;
           break;
         case 'Deltoids':
-          muscleGroups['deltoids'] = muscleGroups['deltoids']! + 1;
+          muscleGroups['Deltoids'] = muscleGroups['Deltoids']! + 1;
           break;
         case 'Obliques':
-          muscleGroups['obliques'] = muscleGroups['obliques']! + 1;
+          muscleGroups['Obliques'] = muscleGroups['Obliques']! + 1;
           break;
         case 'Abs':
-          muscleGroups['abs'] = muscleGroups['abs']! + 1;
+          muscleGroups['Abs'] = muscleGroups['Abs']! + 1;
           break;
         case 'Hamstrings':
-          muscleGroups['hamstrings'] = muscleGroups['hamstrings']! + 1;
+          muscleGroups['Hamstrings'] = muscleGroups['Hamstrings']! + 1;
           break;
         case 'Gluteals':
-          muscleGroups['gluteals'] = muscleGroups['gluteals']! + 1;
+          muscleGroups['Gluteals'] = muscleGroups['Gluteals']! + 1;
           break;
         case 'Quadriceps':
-          muscleGroups['quadriceps'] = muscleGroups['quadriceps']! + 1;
+          muscleGroups['Quadriceps'] = muscleGroups['Quadriceps']! + 1;
           break;
         case 'Calves':
-          muscleGroups['calves'] = muscleGroups['calves']! + 1;
+          muscleGroups['Calves'] = muscleGroups['Calves']! + 1;
           break;
         default:
           break;
@@ -139,10 +139,13 @@ class _WorkoutPage extends State<WorkoutPage> {
                 children: [
                   const Text('Areas Worked: '),
                   Container(
-                    height: 50,
+                    height: 70,
                     width: 400,
                     decoration: const BoxDecoration(color: Colors.blue),
-                    child: Text(worked.join(', ')),
+                    child: Padding(
+                      padding: const EdgeInsets.all(4),
+                      child: Text(worked.join(', ')),
+                    ),
                   ),
                 ],
               ),
@@ -151,10 +154,13 @@ class _WorkoutPage extends State<WorkoutPage> {
                 children: [
                   const Text('Areas to Work: '),
                   Container(
-                    height: 50,
+                    height: 70,
                     width: 400,
                     decoration: const BoxDecoration(color: Colors.blue),
-                    child: Text(notworked.join(', ')),
+                    child: Padding( 
+                      padding: const EdgeInsets.all(4),
+                      child: Text(notworked.join(', ')),
+                    ),
                   ),
                 ],
               ),

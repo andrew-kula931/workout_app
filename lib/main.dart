@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'pages/workout_page.dart';
 import 'data/workout_db.dart';
+import 'pages/workout_archive.dart';
 
 void main() async {
 
@@ -48,6 +49,13 @@ class _WorkoutAppState extends State<WorkoutApp> {
   final _formKey = GlobalKey<FormState>();
   String workoutType = '';
   int duration = 0;
+
+  //Color variables
+  var updateWorkoutColor = Colors.lightGreen;
+  var viewWorkoutHistoryColor = Colors.lightGreen;
+  var routinePlannerColor = Colors.lightGreen;
+
+  //Dropdown menu variables
   bool healthMenu = false;
   bool workoutMenu = false;
   bool orgMenu = false;
@@ -251,12 +259,46 @@ class _WorkoutAppState extends State<WorkoutApp> {
                         if (workoutMenu)
                           Container(
                             width: screenWidth * .25,
-                            decoration: const BoxDecoration(color: Colors.green),
-                            child: const Column (
+                            decoration: const BoxDecoration(color: Colors.lightGreen),
+                            child: Column (
                               children: [
-                                Text("Update Workout Info"),
-                                Text('View History'),
-                                Text('Routine Planner'),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => const WorkoutPage()));
+                                  },
+                                  child: MouseRegion(
+                                    onEnter: (event) => setState(() => updateWorkoutColor = Colors.green),
+                                    onExit: (event) => setState(() => updateWorkoutColor = Colors.lightGreen),
+                                    child: Container(
+                                      height: 40,
+                                      decoration: BoxDecoration(color: updateWorkoutColor),
+                                      child: const Center(child: Text("Update Workout Info"),) 
+                                    ),
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => const WorkoutArchive()));
+                                  },
+                                  child: MouseRegion(
+                                    onEnter: (event) => setState(() => viewWorkoutHistoryColor = Colors.green),
+                                    onExit: (event) => setState(() => viewWorkoutHistoryColor = Colors.lightGreen),
+                                    child: Container(
+                                      height: 40,
+                                      decoration: BoxDecoration(color: viewWorkoutHistoryColor),
+                                      child: const Center(child: Text("View History"),) 
+                                    ),
+                                  ),
+                                ),
+                                MouseRegion(
+                                  onEnter: (event) => setState(() => routinePlannerColor = Colors.green),
+                                  onExit: (event) => setState(() => routinePlannerColor = Colors.lightGreen),
+                                  child: Container(
+                                    height: 40,
+                                    decoration: BoxDecoration(color: routinePlannerColor),
+                                    child: const Center(child: Text("Routine Planner"),) 
+                                  ),
+                                ),
                               ],
                             )
                           ),
