@@ -22,6 +22,8 @@ class _RoutinePlannerState extends State<RoutinePlanner> {
     scheduleBox = Hive.box('WorkoutSchedule');
   }
 
+  final List<Color> colors = [const Color.fromARGB(255, 192, 239, 250), const Color.fromARGB(255, 133, 172, 187)];
+
   String _getWeekdayName(int weekday) {
     switch (weekday) {
       case DateTime.monday:
@@ -86,7 +88,7 @@ class _RoutinePlannerState extends State<RoutinePlanner> {
 
           //This is the week list
           SizedBox(
-            height: (MediaQuery.of(context).size.height * .8),
+            height: (MediaQuery.of(context).size.height * .82),
             child: ListView.builder(
               itemCount: weekDays.length,
               itemBuilder: (context, index) {
@@ -95,19 +97,31 @@ class _RoutinePlannerState extends State<RoutinePlanner> {
                 return ListTile(
                   title: Text('${day.month}/${day.day} - ${_getWeekdayName(day.weekday)}'),
                   subtitle: SizedBox(
-                    height: 60,
+                    height: 150,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: boxInfo.length,
                       itemBuilder: (context, innerIndex) {
-                        return SizedBox(
-                          width: 50,
-                          height: 50,
-                          child: Column(
-                            children: [
-                              Text(boxInfo[innerIndex].name ?? 'No Name'),
-                              Text(boxInfo[innerIndex].workouts ?? 'No Workouts'),
-                            ],
+                        return Container(
+                          width: 200,
+                          height: 150,
+                          decoration: BoxDecoration(color: colors[(innerIndex % 2 == 0) ? 0 : 1]),
+                          child: Padding(
+                            padding: const EdgeInsets.all(3),
+                            child: SingleChildScrollView(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Text(boxInfo[innerIndex].name ?? 'No Name'),
+                                  Container(
+                                    height: 1, 
+                                    width: 120,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.black, width: 1))),
+                                  Text(boxInfo[innerIndex].workouts ?? 'No Workouts'),
+                                ],
+                              ),
+                            ),
                           ),
                         );
                       },
