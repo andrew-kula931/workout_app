@@ -9,16 +9,12 @@ void main() async {
 
   await Hive.initFlutter();
   Hive.registerAdapter(WorkoutDbAdapter());
-  await Hive.openBox('Workout');
 
   Hive.registerAdapter(WorkoutDocAdapter());
-  await Hive.openBox('WorkoutDoc');
 
   Hive.registerAdapter(WorkoutScheduleAdapter());
-  await Hive.openBox('WorkoutSchedule');
 
   Hive.registerAdapter(WorkoutNotesAdapter());
-  await Hive.openBox('WorkoutNotes');
 
   runApp(const MyApp());
 }
@@ -94,6 +90,25 @@ class _WorkoutAppState extends State<WorkoutApp> {
     setState(() {
       funMenu = !funMenu;
     });
+  }
+
+  void _closeWorkoutBoxes() async {
+    if(Hive.isBoxOpen('Workout')) {
+      Box workoutBox = Hive.box('Workout');
+      await workoutBox.close();
+    }
+    if(Hive.isBoxOpen('WorkoutDoc')) {
+      Box workoutDoc = Hive.box('WorkoutDoc');
+      await workoutDoc.close();
+    }
+    if(Hive.isBoxOpen('WorkoutSchedule')) {
+      Box workoutSchedule = Hive.box('WorkoutSchedule');
+      await workoutSchedule.close();
+    }
+    if(Hive.isBoxOpen('WorkoutNotes')) {
+      Box workoutNotes = Hive.box('WorkoutNotes');
+      await workoutNotes.close();
+    }
   }
 
   @override
@@ -257,7 +272,20 @@ class _WorkoutAppState extends State<WorkoutApp> {
                       children: [
                         GestureDetector(
                           onTap: _workoutMenu,
-                          onLongPress: () {
+                          onLongPress: () async {
+                            if(!Hive.isBoxOpen('Workout')) {
+                              await Hive.openBox('Workout');
+                            }
+                            if(!Hive.isBoxOpen('WorkoutDoc')) {
+                              await Hive.openBox('WorkoutDoc');
+                            }
+                            if(!Hive.isBoxOpen('WorkoutSchedule')) {
+                              await Hive.openBox('WorkoutSchedule');
+                            }
+                            if(!Hive.isBoxOpen('WorkoutNotes')) {
+                              await Hive.openBox('WorkoutNotes');
+                            }
+                            // ignore: use_build_context_synchronously
                             Navigator.push(context, MaterialPageRoute(builder: (context) => const WorkoutPage()));
                           },
                           child: Container(
@@ -276,7 +304,20 @@ class _WorkoutAppState extends State<WorkoutApp> {
                             child: Column (
                               children: [
                                 GestureDetector(
-                                  onTap: () {
+                                  onTap: () async {
+                                    if(!Hive.isBoxOpen('Workout')) {
+                                      await Hive.openBox('Workout');
+                                    }
+                                    if(!Hive.isBoxOpen('WorkoutDoc')) {
+                                      await Hive.openBox('WorkoutDoc');
+                                    }
+                                    if(!Hive.isBoxOpen('WorkoutSchedule')) {
+                                      await Hive.openBox('WorkoutSchedule');
+                                    }
+                                    if(!Hive.isBoxOpen('WorkoutNotes')) {
+                                      await Hive.openBox('WorkoutNotes');
+                                    }
+                                    // ignore: use_build_context_synchronously
                                     Navigator.push(context, MaterialPageRoute(builder: (context) => const WorkoutPage()));
                                   },
                                   child: MouseRegion(
@@ -290,7 +331,14 @@ class _WorkoutAppState extends State<WorkoutApp> {
                                   ),
                                 ),
                                 GestureDetector(
-                                  onTap: () {
+                                  onTap: () async {
+                                    if(!Hive.isBoxOpen('Workout')) {
+                                      await Hive.openBox('Workout');
+                                    }
+                                    if(!Hive.isBoxOpen('WorkoutDoc')) {
+                                      await Hive.openBox('WorkoutDoc');
+                                    }
+                                    // ignore: use_build_context_synchronously
                                     Navigator.push(context, MaterialPageRoute(builder: (context) => const WorkoutArchive()));
                                   },
                                   child: MouseRegion(
@@ -304,7 +352,14 @@ class _WorkoutAppState extends State<WorkoutApp> {
                                   ),
                                 ),
                                 GestureDetector(
-                                  onTap: () {
+                                  onTap: () async {
+                                    if(!Hive.isBoxOpen('Workout')) {
+                                      await Hive.openBox('Workout');
+                                    }
+                                    if(!Hive.isBoxOpen('WorkoutSchedule')) {
+                                      await Hive.openBox('WorkoutSchedule');
+                                    }
+                                    //ignore: use_build_context_synchronously
                                     Navigator.push(context, MaterialPageRoute(builder: (context) => const RoutinePlanner()));
                                   },
                                   child: MouseRegion(
