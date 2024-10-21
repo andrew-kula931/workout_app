@@ -5,6 +5,7 @@ import '../workout_components/workout_notes.dart';
 import '../workout_components/edit_workout.dart';
 import 'workout_archive.dart';
 import 'routine_planner.dart';
+import '../workout_components/wnotes_list.dart';
 
 class WorkoutPage extends StatefulWidget {
   const WorkoutPage({super.key});
@@ -205,7 +206,7 @@ class _WorkoutPage extends State<WorkoutPage> {
                   showModalBottomSheet(
                     context: context,
                     builder: (context) {
-                      return WorkoutNotes(workoutNotes: _workoutNotes);
+                      return WNotesList(notesList: _workoutNotes);
                     }
                   ).then((value) {
                     setState(() {});

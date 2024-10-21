@@ -17,6 +17,7 @@ void main() async {
   Hive.registerAdapter(WorkoutScheduleAdapter());
   await Hive.openBox('WorkoutSchedule');
 
+  Hive.registerAdapter(WorkoutNotesAdapter());
   await Hive.openBox('WorkoutNotes');
 
   runApp(const MyApp());

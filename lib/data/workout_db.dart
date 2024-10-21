@@ -59,3 +59,17 @@ class WorkoutSchedule {
     this.workAreas,
     this.day});
 }
+
+@HiveType(typeId: 4)
+class WorkoutNotes {
+  @HiveField(0)
+  late String name;
+
+  @HiveField(1)
+  late String note;
+
+  WorkoutNotes({
+    this.name = '',
+    this.note = '',
+  });
+}

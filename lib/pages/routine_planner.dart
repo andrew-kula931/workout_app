@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import '../workout_components/workout_list.dart';
 import '../workout_components/schedule_workout.dart';
-import '../data/workout_db.dart';
 
 class RoutinePlanner extends StatefulWidget{
   const RoutinePlanner({super.key});
