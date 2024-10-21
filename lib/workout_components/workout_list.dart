@@ -24,7 +24,7 @@ class _WorkoutListState extends State<WorkoutList> {
             padding: const EdgeInsets.only(left:20, right:20, bottom: 1),
             child: GestureDetector(
               onTap: () {
-                Navigator.pop(context, index);
+                Navigator.pop(context, index); //Closes bottom sheet while returning an index
               },
               child: Padding(
                 padding: const EdgeInsets.all(4),

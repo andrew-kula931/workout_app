@@ -14,6 +14,9 @@ void main() async {
   Hive.registerAdapter(WorkoutDocAdapter());
   await Hive.openBox('WorkoutDoc');
 
+  Hive.registerAdapter(WorkoutScheduleAdapter());
+  await Hive.openBox('WorkoutSchedule');
+
   await Hive.openBox('WorkoutNotes');
 
   runApp(const MyApp());
@@ -61,6 +64,12 @@ class _WorkoutAppState extends State<WorkoutApp> {
   bool workoutMenu = false;
   bool orgMenu = false;
   bool funMenu = false;
+
+  @override
+  void dispose() {
+    Hive.close();
+    super.dispose();
+  }
 
   void _healthMenu() {
     setState(() {

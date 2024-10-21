@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import '../workout_components/workout_list.dart';
+import '../workout_components/schedule_workout.dart';
 
 class RoutinePlanner extends StatefulWidget{
   const RoutinePlanner({super.key});
@@ -8,6 +11,15 @@ class RoutinePlanner extends StatefulWidget{
 }
 
 class _RoutinePlannerState extends State<RoutinePlanner> {
+  late final Box workoutList;
+  late final Box scheduleBox;
+
+  @override
+  void initState() {
+    super.initState();
+    workoutList = Hive.box('Workout');
+    scheduleBox = Hive.box('WorkoutSchedule');
+  }
 
   String _getWeekdayName(int weekday) {
     switch (weekday) {
@@ -30,6 +42,26 @@ class _RoutinePlannerState extends State<RoutinePlanner> {
     }
   }
 
+  Future<void> _getWorkout() async {
+    final result = await showModalBottomSheet<int>(
+      context: context,
+      builder: (context) {
+        return WorkoutList(workoutList: workoutList);
+      }
+    );
+    if (result != null) {
+      showModalBottomSheet(
+        // ignore: use_build_context_synchronously
+        context: context, 
+        builder: (context) {
+          return PlanWorkout(index: result);
+        }
+      ).then((value) {
+        setState(() {});
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     DateTime now = DateTime.now();
@@ -45,7 +77,7 @@ class _RoutinePlannerState extends State<RoutinePlanner> {
             padding: const EdgeInsets.all(5),
             child: ElevatedButton(
               onPressed: () {
-                //Fill in
+                _getWorkout();
               },
               child: const Text('Schedule Workout'),
             )
