@@ -109,13 +109,15 @@ class _WorkoutAppState extends State<WorkoutApp> {
       Box workoutNotes = Hive.box('WorkoutNotes');
       await workoutNotes.close();
     }
+    print("Closed boxes");
   }
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-    return Scaffold(
+    return 
+    Scaffold(
       appBar: AppBar(title: const Text('Working It Out'), 
       centerTitle: true,
       titleTextStyle: const TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 2, 46, 14),) ),
@@ -286,7 +288,10 @@ class _WorkoutAppState extends State<WorkoutApp> {
                               await Hive.openBox('WorkoutNotes');
                             }
                             // ignore: use_build_context_synchronously
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => const WorkoutPage()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const WorkoutPage()))
+                            .then((value) {
+                              _closeWorkoutBoxes();
+                            });
                           },
                           child: Container(
                             width: screenWidth * .25,
@@ -318,7 +323,10 @@ class _WorkoutAppState extends State<WorkoutApp> {
                                       await Hive.openBox('WorkoutNotes');
                                     }
                                     // ignore: use_build_context_synchronously
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => const WorkoutPage()));
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => const WorkoutPage()))
+                                    .then((value) {
+                                      _closeWorkoutBoxes();
+                                    });
                                   },
                                   child: MouseRegion(
                                     onEnter: (event) => setState(() => updateWorkoutColor = Colors.green),
@@ -339,7 +347,10 @@ class _WorkoutAppState extends State<WorkoutApp> {
                                       await Hive.openBox('WorkoutDoc');
                                     }
                                     // ignore: use_build_context_synchronously
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => const WorkoutArchive()));
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => const WorkoutArchive()))
+                                    .then((value) {
+                                      _closeWorkoutBoxes();
+                                    });
                                   },
                                   child: MouseRegion(
                                     onEnter: (event) => setState(() => viewWorkoutHistoryColor = Colors.green),
@@ -360,7 +371,10 @@ class _WorkoutAppState extends State<WorkoutApp> {
                                       await Hive.openBox('WorkoutSchedule');
                                     }
                                     //ignore: use_build_context_synchronously
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => const RoutinePlanner()));
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => const RoutinePlanner()))
+                                    .then((value) {
+                                      _closeWorkoutBoxes();
+                                    });
                                   },
                                   child: MouseRegion(
                                     onEnter: (event) => setState(() => routinePlannerColor = Colors.green),
