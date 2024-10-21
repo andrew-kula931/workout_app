@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import '../workout_components/workout_list.dart';
 import '../workout_components/schedule_workout.dart';
+import '../data/workout_db.dart';
 
 class RoutinePlanner extends StatefulWidget{
   const RoutinePlanner({super.key});
@@ -82,14 +83,36 @@ class _RoutinePlannerState extends State<RoutinePlanner> {
               child: const Text('Schedule Workout'),
             )
           ),
+
+          //This is the week list
           SizedBox(
             height: (MediaQuery.of(context).size.height * .8),
             child: ListView.builder(
               itemCount: weekDays.length,
               itemBuilder: (context, index) {
                 DateTime day = weekDays[index];
+                var boxInfo = scheduleBox.values.where((e) => e.day.day == day.day).toList();
                 return ListTile(
                   title: Text('${day.month}/${day.day} - ${_getWeekdayName(day.weekday)}'),
+                  subtitle: SizedBox(
+                    height: 60,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: boxInfo.length,
+                      itemBuilder: (context, innerIndex) {
+                        return SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: Column(
+                            children: [
+                              Text(boxInfo[innerIndex].name ?? 'No Name'),
+                              Text(boxInfo[innerIndex].workouts ?? 'No Workouts'),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ),
                 );
               },
             ),
