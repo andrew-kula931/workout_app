@@ -103,7 +103,7 @@ class _WorkoutAppState extends State<WorkoutApp> {
     return Scaffold(
       appBar: AppBar(title: const Text('Working It Out'), 
       centerTitle: true,
-      titleTextStyle: const TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: Colors.red,) ),
+      titleTextStyle: const TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 2, 46, 14),) ),
       body: Form(
         key: _formKey,
 
@@ -125,7 +125,7 @@ class _WorkoutAppState extends State<WorkoutApp> {
                 //The Event bar
                 Container(
                   margin: const EdgeInsets.only(top: 10, left: 20, right: 20),
-                  decoration: const BoxDecoration(color: Colors.teal),
+                  decoration: const BoxDecoration(color: Colors.lightGreen),
                   child: const Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
@@ -149,7 +149,7 @@ class _WorkoutAppState extends State<WorkoutApp> {
                 //The workout bar
                 Container(
                   margin: const EdgeInsets.only(left: 20, right: 20),
-                  decoration: const BoxDecoration(color: Colors.teal),
+                  decoration: const BoxDecoration(color: Colors.lightGreen),
                   child: const Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
@@ -215,7 +215,9 @@ class _WorkoutAppState extends State<WorkoutApp> {
               ],
             ),
 
-            //Navigation Bar column
+            /*
+              Navigation Bar 
+            */
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [

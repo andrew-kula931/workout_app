@@ -21,7 +21,7 @@ class _RoutinePlannerState extends State<RoutinePlanner> {
     scheduleBox = Hive.box('WorkoutSchedule');
   }
 
-  final List<Color> colors = [const Color.fromARGB(255, 192, 239, 250), const Color.fromARGB(255, 133, 172, 187)];
+  final List<Color> colors = [const Color.fromARGB(255, 250, 192, 195), const Color.fromARGB(255, 187, 133, 133)];
 
   String _getWeekdayName(int weekday) {
     switch (weekday) {

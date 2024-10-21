@@ -143,7 +143,7 @@ class _WorkoutPage extends State<WorkoutPage> {
                   Container(
                     height: 70,
                     width: 400,
-                    decoration: const BoxDecoration(color: Colors.blue),
+                    decoration: const BoxDecoration(color: Color.fromARGB(255, 245, 92, 92)),
                     child: Padding(
                       padding: const EdgeInsets.all(4),
                       child: Text(worked.join(', ')),
@@ -158,7 +158,7 @@ class _WorkoutPage extends State<WorkoutPage> {
                   Container(
                     height: 70,
                     width: 400,
-                    decoration: const BoxDecoration(color: Colors.blue),
+                    decoration: const BoxDecoration(color: Color.fromARGB(255, 245, 92, 92)),
                     child: Padding( 
                       padding: const EdgeInsets.all(4),
                       child: Text(notworked.join(', ')),

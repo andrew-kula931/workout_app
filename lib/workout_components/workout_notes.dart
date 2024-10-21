@@ -73,6 +73,7 @@ class _WorkoutNotesClassState extends State<WorkoutNotesClass> {
             ),
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               ElevatedButton(
                 onPressed: () async {
