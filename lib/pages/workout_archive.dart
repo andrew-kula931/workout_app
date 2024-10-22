@@ -52,7 +52,7 @@ class _WorkoutArchiveState extends State<WorkoutArchive> {
         children: [
           Flexible(
             child: ListView.builder(
-              itemCount: _filteredList.length, //Needs to make this dynamic
+              itemCount: _filteredList.length, 
               itemBuilder: (context, index) {
                 var doc = _filteredList.getAt(index);
                 return ListTile(

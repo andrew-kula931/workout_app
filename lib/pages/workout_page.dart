@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import '../workout_components/add_workout.dart';
-import '../workout_components/workout_notes.dart';
 import '../workout_components/edit_workout.dart';
 import 'workout_archive.dart';
 import 'routine_planner.dart';
@@ -15,6 +14,7 @@ class WorkoutPage extends StatefulWidget {
 }
 
 class _WorkoutPage extends State<WorkoutPage> {
+
   late final Box _workoutBox;
   late final Box _workoutNotes;
   late final Box _workoutDocs;
@@ -132,7 +132,7 @@ class _WorkoutPage extends State<WorkoutPage> {
           //Summary Section
           Container(
             margin: const EdgeInsets.only(left: 20),
-            child: const Text('Summary:', style: TextStyle(fontSize: 30)),
+            child: const Text('Summary:', style: TextStyle(fontSize: 20)),
           ),
           Column(
             children: [
@@ -172,7 +172,9 @@ class _WorkoutPage extends State<WorkoutPage> {
             height: 40,
           ),
 
-          //Operation buttons
+          /*
+          Operation buttons
+          */
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -184,7 +186,10 @@ class _WorkoutPage extends State<WorkoutPage> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const WorkoutArchive()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const WorkoutArchive()))
+                  .then((value) {
+                    countAreas();
+                  });
                 },
                 child: const Text('Document Workout'),
               ),

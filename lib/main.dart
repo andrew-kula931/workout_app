@@ -109,7 +109,6 @@ class _WorkoutAppState extends State<WorkoutApp> {
       Box workoutNotes = Hive.box('WorkoutNotes');
       await workoutNotes.close();
     }
-    print("Closed boxes");
   }
 
   @override
