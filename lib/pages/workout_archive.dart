@@ -15,6 +15,8 @@ class _WorkoutArchiveState extends State<WorkoutArchive> {
   late final Box _filteredList;
   late final Box workoutList;
 
+  final List<Color> tileColors = [const Color.fromARGB(255, 190, 63, 63), const Color.fromARGB(255, 236, 161, 161)];
+
   @override
   void initState() {
     super.initState();
@@ -55,8 +57,10 @@ class _WorkoutArchiveState extends State<WorkoutArchive> {
               itemCount: _filteredList.length, 
               itemBuilder: (context, index) {
                 var doc = _filteredList.getAt(index);
+                int place = index;
                 return ListTile(
                   title: Text(doc.name),
+                  tileColor: tileColors[place % 2],
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -75,7 +79,7 @@ class _WorkoutArchiveState extends State<WorkoutArchive> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.all(6),
+                padding: const EdgeInsets.only(bottom: 20),
                 child: ElevatedButton(
                   onPressed: () {
                     _getWorkout();

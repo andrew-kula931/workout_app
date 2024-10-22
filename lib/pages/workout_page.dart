@@ -21,6 +21,9 @@ class _WorkoutPage extends State<WorkoutPage> {
   late List<String> worked;
   late List<String> notworked;
 
+  final List<Color> tileColors = [const Color.fromARGB(255, 250, 145, 145), const Color.fromARGB(255, 250, 205, 205)];
+
+
   //Setup for areas worked calculations
   Map<String, int> muscleGroups = {
     'UpperChest': 0,
@@ -52,8 +55,11 @@ class _WorkoutPage extends State<WorkoutPage> {
 
   //Counts the worked areas
   void countAreas() {
-    for (var i = 0; i < _workoutDocs.length; i++) {
-      var obj = _workoutDocs.getAt(i);
+    DateTime now = DateTime.now();
+    DateTime recentSunday = now.subtract(Duration(days: now.weekday % 7));
+    var workoutDoc = _workoutDocs.values.where((e) => e.day.isAfter(recentSunday)).toList();
+    for (var i = 0; i < workoutDoc.length; i++) {
+      var obj = workoutDoc[i];
       for (var area in obj.workAreas) {
        switch (area) {
         case 'Upper Chest':
@@ -143,7 +149,9 @@ class _WorkoutPage extends State<WorkoutPage> {
                   Container(
                     height: 70,
                     width: 400,
-                    decoration: const BoxDecoration(color: Color.fromARGB(255, 245, 92, 92)),
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 1),
+                      borderRadius: BorderRadius.circular(12)),
                     child: Padding(
                       padding: const EdgeInsets.all(4),
                       child: Text(worked.join(', ')),
@@ -151,20 +159,25 @@ class _WorkoutPage extends State<WorkoutPage> {
                   ),
                 ],
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  const Text('Areas to Work: '),
-                  Container(
-                    height: 70,
-                    width: 400,
-                    decoration: const BoxDecoration(color: Color.fromARGB(255, 245, 92, 92)),
-                    child: Padding( 
-                      padding: const EdgeInsets.all(4),
-                      child: Text(notworked.join(', ')),
+              Padding(
+                padding: const EdgeInsets.only(top: 6),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    const Text('Areas to Work: '),
+                    Container(
+                      height: 70,
+                      width: 400,
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 1),
+                        borderRadius: BorderRadius.circular(12)),
+                      child: Padding( 
+                        padding: const EdgeInsets.all(4),
+                        child: Text(notworked.join(', ')),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),
@@ -232,6 +245,7 @@ class _WorkoutPage extends State<WorkoutPage> {
               itemCount: _workoutBox.length,
               itemBuilder: (context, index) {
                 var value = _workoutBox.getAt(index);
+                int place = index;
                 return Padding(
                   padding: const EdgeInsets.only(left:20, right:20, bottom: 1),
                   child: GestureDetector(
@@ -245,15 +259,26 @@ class _WorkoutPage extends State<WorkoutPage> {
                         setState(() {});
                       });
                     },
-                    child: ListTile(
-                      tileColor: Colors.amber,
-                      title: Text(value.name),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Workouts: ${value.workouts}'),
-                          Text('Work Areas: ${value.workAreas?.join(', ') ?? 'No Work Areas'}'),
-                        ],
+                    child: Container ( 
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.black,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: ListTile(
+                        tileColor: tileColors[place % 2],
+                        title: Text(value.name),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Workouts: ${value.workouts}', 
+                              style: const TextStyle(color: Colors.black)),
+                            Text('Work Areas: ${value.workAreas?.join(', ') ?? 'No Work Areas'}',
+                              style: const TextStyle(color: Colors.black)),
+                          ],
+                        ),
                       ),
                     ),
                   ),

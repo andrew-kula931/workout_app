@@ -39,29 +39,35 @@ class PlanWorkoutState extends State<PlanWorkout> {
     return IntrinsicHeight(
       child: Column(
         children: [
-          TextField(
-            readOnly: true,
-            controller: _dateTimeController,
-            onTap: () {
-              _selectDate(context);
-            },
-            decoration: const InputDecoration(hintText: 'Select Date'),
+          Padding(
+            padding: const EdgeInsets.all(12),
+            child: TextField(
+              readOnly: true,
+              controller: _dateTimeController,
+              onTap: () {
+                _selectDate(context);
+              },
+              decoration: const InputDecoration(hintText: 'Select Date'),
+            ),
           ),
-          ElevatedButton(
-            onPressed: () async {
-              var box = Hive.box('WorkoutSchedule');
-              var workoutData = workoutBox.getAt(widget.index);
-              WorkoutSchedule data = WorkoutSchedule(
-                name: workoutData.name,
-                workouts: workoutData.workouts,
-                workAreas: workoutData.workAreas,
-                day: DateTime.parse(_dateTimeController.text),
-              );
-              await box.add(data);
-              // ignore: use_build_context_synchronously
-              Navigator.pop(context);
-            },
-            child: const Text('Schedule'),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 20),
+            child: ElevatedButton(
+              onPressed: () async {
+                var box = Hive.box('WorkoutSchedule');
+                var workoutData = workoutBox.getAt(widget.index);
+                WorkoutSchedule data = WorkoutSchedule(
+                  name: workoutData.name,
+                  workouts: workoutData.workouts,
+                  workAreas: workoutData.workAreas,
+                  day: DateTime.parse(_dateTimeController.text),
+                );
+                await box.add(data);
+                // ignore: use_build_context_synchronously
+                Navigator.pop(context);
+              },
+              child: const Text('Schedule'),
+            ),
           ),
         ],
       )

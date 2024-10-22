@@ -13,9 +13,11 @@ class _WorkoutListState extends State<WorkoutList> {
   
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width,
-      height: 300,
+    return ConstrainedBox(
+      constraints: const BoxConstraints(
+        minHeight: 200,
+        maxHeight: 500,
+      ),
       child: ListView.builder(
         itemCount: widget.workoutList.length,
         itemBuilder: (context, index) {
@@ -29,7 +31,7 @@ class _WorkoutListState extends State<WorkoutList> {
               child: Padding(
                 padding: const EdgeInsets.all(4),
                 child: ListTile(
-                  tileColor: Colors.amber,
+                  tileColor: const Color.fromARGB(255, 250, 223, 223),
                   title: Text(value.name),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

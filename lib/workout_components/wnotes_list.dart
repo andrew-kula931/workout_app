@@ -25,43 +25,57 @@ class WNotesListState extends State<WNotesList> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-                showModalBottomSheet(
-                  context: context,
-                  builder: (context) {
-                    return WorkoutNotesClass(index: -1, notesList: widget.notesList,); //Index need to be dynamic
-                  }
-                );
-              }, 
-              child: const Text('Add Note'))
-          ],
-        ),
-        SizedBox(
-          height: 300,
-          child: ListView.builder(
-            itemCount: widget.notesList.length,
-            itemBuilder: (context, index) {
-              var box = widget.notesList.getAt(index);
-              return GestureDetector(
-                onTap: () {
+            Padding(
+              padding: const EdgeInsets.all(5),
+              child: ElevatedButton(
+                onPressed: () {
                   Navigator.pop(context);
                   showModalBottomSheet(
                     context: context,
                     builder: (context) {
-                      return WorkoutNotesClass(index: index, notesList: widget.notesList,);
+                      return WorkoutNotesClass(index: -1, notesList: widget.notesList,); //Index need to be dynamic
                     }
                   );
-                },
-                child: ListTile(
-                  title: Text('${box.name}'),
-                  subtitle: Text('${box.note}'),
-                )
-              );
-            }
-            
-          )
+                }, 
+                child: const Text('Add Note'))
+            )
+          ],
+        ),
+        SizedBox(
+          height: 300,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 10, right: 10),
+            child: ListView.builder(
+              itemCount: widget.notesList.length,
+              itemBuilder: (context, index) {
+                var box = widget.notesList.getAt(index);
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return WorkoutNotesClass(index: index, notesList: widget.notesList,);
+                      }
+                    );
+                  },
+                  child: Container ( 
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.black,
+                        width: 2,
+                      ),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: ListTile(
+                      title: Text('${box.name}'),
+                      subtitle: Text('${box.note}'),
+                    ),
+                  ),
+                );
+              }
+            ),
+          ),
         ),
       ],
     );
