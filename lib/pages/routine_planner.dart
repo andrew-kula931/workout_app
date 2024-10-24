@@ -104,20 +104,42 @@ class _RoutinePlannerState extends State<RoutinePlanner> {
                         return Container(
                           width: 200,
                           height: 150,
-                          decoration: BoxDecoration(color: colors[(innerIndex % 2 == 0) ? 0 : 1]),
+                          decoration: BoxDecoration(
+                            color: colors[(innerIndex % 2 == 0) ? 0 : 1],
+                            border: Border.all(color: Colors.black, width: 1),
+                            borderRadius: BorderRadius.circular(4)),
                           child: Padding(
                             padding: const EdgeInsets.all(3),
                             child: SingleChildScrollView(
                               child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(boxInfo[innerIndex].name ?? 'No Name'),
-                                  Container(
-                                    height: 1, 
-                                    width: 120,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(color: Colors.black, width: 1))),
-                                  Text(boxInfo[innerIndex].workouts ?? 'No Workouts'),
+                                  Column(
+                                    children: [
+                                      Text(boxInfo[innerIndex].name ?? 'No Name'),
+                                      Container(
+                                        height: 1, 
+                                        width: 120,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(color: Colors.black, width: 1))),
+                                      Text(boxInfo[innerIndex].workouts ?? 'No Workouts'),
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(6),
+                                    child: ElevatedButton(
+                                      onPressed: () async {
+                                        for (int i = 0; i < scheduleBox.length; i++) {
+                                          if (boxInfo[innerIndex] == scheduleBox.getAt(i)) {
+                                            await scheduleBox.deleteAt(i);
+                                            break;
+                                          }
+                                        }
+                                        setState(() {});
+                                      },
+                                      child: const Text('Remove'),
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),

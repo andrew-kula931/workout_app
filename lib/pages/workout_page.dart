@@ -202,6 +202,7 @@ class _WorkoutPage extends State<WorkoutPage> {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => const WorkoutArchive()))
                   .then((value) {
                     countAreas();
+                    setState(() {});
                   });
                 },
                 child: const Text('Document Workout'),
